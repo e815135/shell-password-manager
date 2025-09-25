@@ -121,11 +121,7 @@ add_password() {
 	get_current_services
 	if [ ! ${#ALL_ENTRIES[@]} -eq 0 ]
 	then
-		echo "Service names already stored:"
-		while IFS='' read -r LINE
-		do
-			echo $LINE | cut -d'|' -f1 | xargs
-		done <<< $ALL_ENTRIES
+		show_current_services
 		read -p "Enter NEW service name: " SERVICE
 		while IFS='' read -r LINE
 		do
@@ -187,11 +183,7 @@ delete_password() {
 	get_current_services
 	if [ ! ${#ALL_ENTRIES[@]} -eq 0 ]
 	then
-		echo "Service names already stored:"
-		while IFS='' read -r LINE
-		do
-			echo $LINE | cut -d'|' -f1 | xargs
-		done <<< $ALL_ENTRIES
+		show_current_services
 		read -p "Enter service name: " SERVICE
 		read -p "Are you sure you'd like to delete $SERVICE? (Y/N): " PROCEED
 		if [ ! $PROCEED = "Y" ]
@@ -240,15 +232,19 @@ get_current_services() {
 	fi
 }
 
+show_current_services() {
+	echo "Service names already stored:"
+	while IFS='' read -r LINE
+	do
+		echo $LINE | cut -d'|' -f1 | xargs
+	done <<< $ALL_ENTRIES
+}
+
 view_password() {
 	get_current_services
 	if [ ! ${#ALL_ENTRIES[@]} -eq 0 ]
 	then
-		echo "Service names already stored:"
-		while IFS='' read -r LINE
-		do
-			echo $LINE | cut -d'|' -f1 | xargs
-		done <<< $ALL_ENTRIES
+		show_current_services
 		read -p "Enter service name: " SERVICE_NAME
 		while IFS='' read -r LINE
 		do
